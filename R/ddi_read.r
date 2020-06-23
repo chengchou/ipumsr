@@ -238,7 +238,11 @@ get_var_info_from_ddi <- function(ddi_xml, file_type, rt_idvar, rectype_labels) 
         lbls <- dplyr::filter(lbls, .data$val != .data$lbl)
       }
 
-      out <- dplyr::bind_rows(lbls, extra_labels)
+      if (nrow(extra_labels) > 0) {
+        out <- dplyr::bind_rows(lbls, extra_labels)
+      } else {
+        out <- lbls
+      }
       dplyr::arrange(out, .data$val)
     })
 
